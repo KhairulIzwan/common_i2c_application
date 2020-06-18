@@ -1,0 +1,9 @@
+<launch>
+
+	<!-- AVAILABLE BOX -->
+	<include file="$(find common_i2_application)/launch/available_box.launch"/>
+
+	<!-- BOX TRIGGER -->
+	<include file="$(find common_i2_application)/launch/box_trigger.launch"/>
+
+</launch>

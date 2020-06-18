@@ -1,0 +1,10 @@
+<launch>
+
+	<!-- AVAILABLE BOX -->
+	<node	pkg="common_i2c_application" 
+		name="available_box" 
+		type="available_box.py" >
+	<!-- 	output="screen"> -->
+	</node>
+
+</launch>

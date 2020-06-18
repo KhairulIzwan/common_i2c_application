@@ -1,0 +1,10 @@
+<launch>
+
+	<!-- BOX TRIGGER -->
+	<node	pkg="common_i2c_application" 
+		name="box_trigger" 
+		type="box_trigger.py" >
+	<!-- 	output="screen"> -->
+	</node>
+
+</launch>
