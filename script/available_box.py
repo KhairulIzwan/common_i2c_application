@@ -30,7 +30,7 @@ I2C_ADD = 0x09 # Arduino I2C address
 class BoxIDValidate_node:
 	def __init__(self):
 
-		self.boxState = boxStatus()
+		self.boxAvailable = boxStatus()
 		self.prevI2CData = 0
 
 		# Initializing your ROS Node
@@ -44,8 +44,8 @@ class BoxIDValidate_node:
 
 	def pubBoxStatus(self):
 
-		self.boxState.data = self.boxState
-		self.boxStatus_pub.publish(self.boxState)
+		self.boxAvailable.data = self.boxState
+		self.box_pub.publish(self.boxAvailable)
 
 		# Sleep to give the last log messages time to be sent
 #		rospy.sleep(0.5)

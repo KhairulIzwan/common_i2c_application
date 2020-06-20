@@ -27,48 +27,30 @@ import smbus
 i2c = smbus.SMBus(1)
 I2C_ADD = 0x09 # Arduino I2C address
 
-class BoxIDTrigger:
+class BoxIDTrigger_node:
 	def __init__(self):
 
 		self.boxState = boxStatus()
 		self.prevI2CData = 0
 
-		self.trigger_recieved = True
+		# Initializing your ROS Node
+		rospy.init_node('box_trigger', anonymous=False)
 
 		# Subscribe Int32 msg
-		active_topic = "/boxID_activation"
-		self.active_sub = rospy.Subscriber(active_topic, Int32, self.cbBoxTrigger)
+		self.boxID_activation_sub = rospy.Subscriber("/boxID_activation", Int32, self.cbBoxTrigger)
 
 	def cbBoxTrigger(self, msg):
 
-		try:
-			trig = msg.data
-		except KeyboardInterrupt as e:
-			print(e)
+		i2c.write_byte(I2C_ADD, msg.data)
 
-		self.trigger_recieved = True
-		self.trigVal = trig
+def main(args):
 
-	def push(self):
+	vn = BoxIDTrigger_node()
 
-		if self.trigger_recieved:
-			i2c.write_byte(I2C_ADD, self.trigVal)
-
-			# Sleep to give the last log messages time to be sent
-			rospy.sleep(1)
-
-			i2c.write_byte(I2C_ADD, 0)
-
-			self.trigger_recieved = False
-		else:
-			i2c.write_byte(I2C_ADD, 0)
+	try:
+		rospy.spin()
+	except KeyboardInterrupt:
+		rospy.loginfo("[INFO] BoxIDTrigger_node [OFFLINE]...")
 
 if __name__ == '__main__':
-
-	# Initializing your ROS Node
-	rospy.init_node('box_trigger', anonymous=False)
-	trigger = BoxIDTrigger()
-
-	# Camera preview
-	while not rospy.is_shutdown():
-		trigger.push()
+	main(sys.argv)
