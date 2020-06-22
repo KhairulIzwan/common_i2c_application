@@ -31,7 +31,7 @@ class BoxIDTrigger_node:
 	def __init__(self):
 
 		self.boxState = boxStatus()
-		self.prevI2CData = 0
+		self.prevI2CData = 1000
 
 		# Initializing your ROS Node
 		rospy.init_node('box_trigger', anonymous=False)
