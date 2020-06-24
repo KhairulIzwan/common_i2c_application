@@ -31,7 +31,7 @@ class BoxIDTrigger_node:
 	def __init__(self):
 
 		self.boxState = boxStatus()
-		self.prevI2CData = 1000
+		self.prevI2CData = 0
 
 		# Initializing your ROS Node
 		rospy.init_node('box_trigger', anonymous=False)
@@ -42,6 +42,13 @@ class BoxIDTrigger_node:
 	def cbBoxTrigger(self, msg):
 
 		i2c.write_byte(I2C_ADD, msg.data)
+
+		rospy.sleep(1)
+		
+		msg.data=0
+		i2c.write_byte(I2C_ADD, msg.data)
+
+		rospy.sleep(1)
 
 def main(args):
 
